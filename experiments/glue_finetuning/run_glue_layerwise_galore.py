@@ -677,8 +677,8 @@ def main():
                 {
                     "params": parameters,
                     "rank": rank,
-                    "update_proj_gap": 200,
-                    "scale": 0.25,
+                    "update_proj_gap": 500,
+                    "scale": 4.0,
                     "proj_type": "std",
                     "weight_decay": args.weight_decay,
                 }
