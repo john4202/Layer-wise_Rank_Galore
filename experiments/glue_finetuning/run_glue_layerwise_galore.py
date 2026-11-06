@@ -538,8 +538,8 @@ def main():
         if marker not in parameter_name:
             return None
 
-    layer_part = parameter_name.split(marker, 1)[1]
-    return int(layer_part.split(".", 1)[0])
+        layer_part = parameter_name.split(marker, 1)[1]
+        return int(layer_part.split(".", 1)[0])
 
 
     def get_galore_rank(layer_index):
