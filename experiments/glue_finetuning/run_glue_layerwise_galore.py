@@ -283,6 +283,34 @@ def parse_args():
         default=False,
         help="Whether to use the generalized error feedback mechanism.",
     )
+    
+    # Modified: Argument added:
+    # rank argument / scale argument / gap argument
+    parser.add_argument(
+        "--galore_rank_early",
+        type=int,
+        default=4,
+    )
+    parser.add_argument(
+        "--galore_rank_middle",
+        type=int,
+        default=8,
+    )
+    parser.add_argument(
+        "--galore_rank_late",
+        type=int,
+        default=16,
+    )
+    parser.add_argument(
+        "--galore_scale",
+        type=float,
+        default=4.0,
+    )
+    parser.add_argument(
+        "--update_proj_gap",
+        type=int,
+        default=500,
+    )
 
     args = parser.parse_args()
 
@@ -544,11 +572,11 @@ def main():
 
     def get_galore_rank(layer_index):
         if layer_index <= 3:
-            return 4
+            return args.galore_rank_early
         elif layer_index <= 7:
-            return 8
+            return args.galore_rank_middle
         else:
-            return 16
+            return args.galore_rank_late
     # ================================
 
     # Optimizer
@@ -628,9 +656,9 @@ def main():
         ]
 
         rank_to_params = {
-            4: [],
-            8: [],
-            16: [],
+            args.galore_rank_early: [],
+            args.galore_rank_middle: [],
+            args.galore_rank_late: [],
         }
 
         regular_decay_params = []
@@ -677,8 +705,8 @@ def main():
                 {
                     "params": parameters,
                     "rank": rank,
-                    "update_proj_gap": 500,
-                    "scale": 4.0,
+                    "update_proj_gap": args.update_proj_gap,
+                    "scale": args.galore_scale,
                     "proj_type": "std",
                     "weight_decay": args.weight_decay,
                 }
