@@ -707,7 +707,7 @@ def main():
                     "rank": rank,
                     "update_proj_gap": args.update_proj_gap,
                     "scale": args.galore_scale,
-                    "proj_type": "std",
+                    "proj_type": args.proj_type,
                     "weight_decay": args.weight_decay,
                 }
             )
